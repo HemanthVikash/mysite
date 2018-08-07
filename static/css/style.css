@@ -1,0 +1,115 @@
+body, textarea, .field {
+    font-size: 12pt;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+.inline_text{
+    /* to make it in the same line as the options*/
+    display: inline !important;
+}
+
+.form-label, .form-label2
+{
+    font-size: 12pt;
+    font-weight: bold;
+    padding-right: 10px
+
+}
+.form-radio {
+    padding: 1px 20px;
+    margin: -5px 0px;
+}
+
+.form-group{
+    background: #F8F8F8;
+    border-radius: .2rem;
+    padding: 0rem .5rem .5rem;
+}
+
+.form-input {
+    /*height: 3em;*/
+    padding-bottom: 1.5rem;
+    font-weight: lighter
+}
+
+.container {
+    width: 80%;
+    padding: 3.5rem 2rem;
+}
+
+.page-item-title{
+    border-radius: 2rem;
+    background: #454d5d;
+    color: #fff;
+    padding: .3rem 1rem
+}
+.tweet-question {
+    padding-bottom: 2rem;
+}
+
+h1, h3, h5 {
+    text-align: center;
+}
+
+#submit-div {
+    text-align: center;
+}
+
+#submit-div input {
+    width: 10rem;
+}
+
+.description {
+    text-align: center;
+    padding-bottom: .5rem;
+}
+
+img.questionicon {
+    width: 15px;
+    position: absolute;
+    margin-top: -25px;
+    right: 0;
+    margin-right: calc(10% + 2.5rem);
+
+}
+
+.description,.page-item-title{
+    font-size: 18px;
+}
+
+.margin-issue{
+    margin-bottom: 1rem; 
+}
+
+.align_text_with_radio{
+    left: -15px;
+}
+
+.top_head{
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+@media (max-width: 700px){
+    body, textarea, .field {
+        font-size: 10pt;
+    }
+    .form-label, .form-label2
+    {
+        font-size: 10pt;
+    }
+    .description,.page-item-title{
+        font-size: 16px;
+    }
+    .align_text_with_radio{
+        left: -5px;
+    }
+    .top_head{
+        font-size: 12pt;
+        font-weight: bold;
+    }
+
+}

@@ -1,0 +1,14 @@
+Database  User            Password
+drupal_1      shruti1  
+drupal_2      shruti2  
+drupal_3      shruti3  
+drupal_4      shruti4  
+drupal_5      shruti5  
+drupal_6      shruti6  
+drupal_7      shruti7  
+drupal_8      shruti8  
+drupal_9      shruti9  
+drupal_10      shruti10  
+drupal_11      shruti11  
+drupal_12      shruti12  
+drupal_13      shruti13  

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/spectre.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tipr.css') }}">
+    <title>Extremist Tweet Coding</title>
+    <style type="text/css">
+        .col-fixed-600{
+            width:600px;
+            position:fixed;
+            height:100%;
+            z-index:1;
+        }
+
+        .col-offset-600{
+            padding-left:615px;
+            z-index:0;
+        }
+        .container{
+            width: 100%;
+        }
+        .cat{
+            font-size: 13pt;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-fixed-600">
+                {% for post in posts.items %}
+                <div class="tweet" id="{{post.tweetid}}">
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-12 col-offset-600">
+                <div class="row">
+                    <form method="POST" action="{{ url_for('showSurvey', page=page, response=response,  tweetid=tweet_id,username=username) }}" id="tweet-form">
+                        <div>
+                            {{ form.hidden_tag() }}
+                            <div class="columns col-gapless">
+                                <div class="column col-12">
+                                    {% for key, value in response.items() %}
+
+                                        {% set field = form|attr(key) %}
+
+                                        {% set count = loop.index0/2 %}
+                                        {% for start_idx in index_range %}
+                                            {% if count == start_idx and field.type == "RadioField" %}
+                                                <div class="form-group">
+                                                    <label class="cat">{{header[loop.index0]}}</label>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if field.type == "RadioField" %}
+                                        <div class="form-group {% if field.errors %} has-error {% endif %}">
+                                            {{ field.label(class_="form-label2") }}
+                                            {% for subfield in field %}
+                                                <label class="field form-radio">{{ subfield }}
+                                                    <i class="form-icon"></i> {{ subfield.label }}
+                                                </label>
+                                            {% endfor %}
+                                            {% if field.errors %}
+                                                <p class="form-input-hint">{{ ', '.join(field.errors) }}</p>
+                                            {% endif %}
+                                        </div>
+                                        {% elif field.type == "TextField" %}
+                                        <div class="form-group">
+                                            {{ field(class_="field form-input", disabled=True) }}
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% if form.errors %}
+                        {{ form.errors }}
+                    {% endif %}
+
+                    <ul class="pagination">
+                        <li class="page-item page-next">
+                                <span>{{pagesLeft}} more posts to evaluate </span>
+                            <a href="#" id="next">
+                                <div class="page-item-title">
+                                    {% if pagesLeft > 0 %} Next >> {% else %} Submit {% endif %}
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script sync src="https://platform.twitter.com/widgets.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tipr.min.js') }}"></script>
+    <script>
+            var tweets = jQuery(".tweet");
+            jQuery(tweets).each(function (t, tweet) {
+
+                var id = jQuery(this).attr('id');
+
+                twttr.widgets.createTweet(
+                    id, tweet,
+                    {
+                        conversation: 'none',
+                        cards: 'visible',
+                        theme: 'light',
+                        align: 'center'
+                    });
+
+            });
+            var select_elem = "";
+            function getSelectionText(){
+                var selectedText = ""
+                if (window.getSelection){ // all modern browsers and IE9+
+                    selectedText = window.getSelection().toString()
+                }
+                return selectedText
+            }
+            document.addEventListener('mouseup', function(){
+                var thetext = getSelectionText()
+                if (thetext.length > 0 && select_elem != ""){ // check there's some text selected
+                    select_elem.val(thetext);
+                }
+            }, false);
+            $(document).ready(function() {
+                $("#next").click(function () {
+                    $("#tweet-form").submit();
+                });
+                $("input[type=radio]").click(function(evt){
+                    var obj = evt.target;
+                    var textfield = $("#"+obj.name.substring(0,obj.name.length-1)+"t");
+                    if(obj.value == "1"){
+                        textfield.prop('disabled', false);
+                        select_elem = textfield;
+                    }else{
+                        textfield.prop('disabled', true);
+                        textfield.val("");
+                        select_elem = "";
+                    }
+                });
+            });
+    </script>
+</body>
+
+</html>
